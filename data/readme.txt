@@ -1,0 +1,1 @@
+The data from Jan 2024- Nov 2024 can be downloaded from https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
