@@ -220,5 +220,3 @@ elif page == "Model Monitoring":
     fig.suptitle("Model Performance Across Versions")
     fig.tight_layout()
     st.pyplot(fig)
-    # Plot MAE and R² for different model versions
-    st.line_chart(runs[["metrics.MAE", "metrics.R2"]])
