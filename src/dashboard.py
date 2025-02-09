@@ -6,7 +6,8 @@ import pydeck as pdk
 import matplotlib.pyplot as plt
 
 
-# ###################### this part can be used to connect to MLflow #############
+
+# # this part can be used to connect to MLflow 
 # # Set the MLflow tracking URI if not using the default local file-based store:
 # # mlflow.set_tracking_uri("http://your-tracking-server:5000")
 
@@ -55,11 +56,11 @@ import matplotlib.pyplot as plt
 
 
 
-df = pd.read_csv('./data/PredictedTrips.csv')
+df = pd.read_csv('../data/PredictedTrips.csv')
 
 df['predict_trips'] = df['predict_trips'].round().astype(int)
 
-dfZone = pd.read_csv("./data/taxi_zone_lookup.csv")
+dfZone = pd.read_csv("../data/taxi_zone_lookup.csv")
 
 df = df.merge(dfZone[['LocationID', 'Zone']], on='LocationID', how='left')
 
@@ -69,13 +70,13 @@ df = df.merge(dfZone[['LocationID', 'Zone']], on='LocationID', how='left')
 st.sidebar.header("Time Filter")
 month = st.sidebar.number_input("Month", min_value=9, max_value=11, value=9)
 day = st.sidebar.number_input("Day", min_value=1, max_value=31, value=1)
-hour = st.sidebar.number_input("Hour", min_value=0, max_value=23, value=0)
+hour = st.sidebar.number_input("Hour", min_value=0, max_value=23, value=16)
 
 # Filter the data by time parameters
 filtered_df = df[(df['month'] == month) & (df['day'] == day) & (df['hour'] == hour)]
 
 # Sidebar: Page Selection
-page = st.sidebar.radio("Select Page", ["Overall Map", "Top Locations", "Specific Location"])
+page = st.sidebar.radio("Select Page", ["Overall Map", "Top Locations", "Specific Location", "Model Monitoring"])
 
 # ----------------------------
 # Page 1: Overall Map
@@ -191,14 +192,31 @@ elif page == "Specific Location":
 # ----------------------------
 # Page 4: Model performace
 # ----------------------------
-elif page == "Model monitoring":
+elif page == "Model Monitoring":
+
     st.title("XGBoost Model Versions and Performance Metrics")
 
     # we assume a value for runs first. In real cases, we receive it from MLflow
-    runs = {'metrics.MAE': [14.0, 8.0, 6.8], 'metrics.R2': [0.54, 0.53, 0.46]}
+    runs = {'Version': ['v1', 'v2', 'v3', 'v4'], 'MAE': [14.0, 8.0, 6.8, 6.6], 'R2': [0.54, 0.53, 0.46, 0.44]}
 
-    # Display the DataFrame
-    st.dataframe(runs)
+    df = pd.DataFrame(runs)
+   
+   # Matplotlib Figure
+    fig, ax1 = plt.subplots(figsize=(8, 5))
 
-    # Plot MAE and R² for different model versions
-    st.line_chart(runs[["metrics.MAE", "metrics.R2"]])
+    # Plot MAE on primary y-axis
+    ax1.set_xlabel("Model Version")
+    ax1.set_ylabel("MAE", color="tab:blue")
+    ax1.plot(df["Version"], df["MAE"], marker="o", color="tab:blue", label="MAE")
+    ax1.tick_params(axis="y", labelcolor="tab:blue")
+    ax1.grid(True)  # Enable grid
+    # Create secondary y-axis for R²
+    ax2 = ax1.twinx()
+    ax2.set_ylabel("R²", color="tab:red")
+    ax2.plot(df["Version"], df["R2"], marker="s", color="tab:red", linestyle="dashed", label="R²")
+    ax2.tick_params(axis="y", labelcolor="tab:red")
+
+    # Add title and legend
+    fig.suptitle("Model Performance Across Versions")
+    fig.tight_layout()
+    st.pyplot(fig)
