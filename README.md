@@ -24,4 +24,5 @@
 - explicit data analysis and data processing
 - model builing, comparison and conclusion
 
-The published streamlit app is https://nyc-taxi-demand-prediction-chengli.streamlit.app/
+**The published streamlit app is https://nyc-taxi-demand-prediction-chengli.streamlit.app/**  <br />
+**The presentation pdf is Data_Driven_Demand_Forecasting.pdf**
