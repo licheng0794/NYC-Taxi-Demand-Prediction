@@ -56,11 +56,11 @@ import matplotlib.pyplot as plt
 # """
 
 
-df = pd.read_csv('../data/PredictedTrips.csv')
+df = pd.read_csv('./data/PredictedTrips.csv')
 
 df['predict_trips'] = df['predict_trips'].round().astype(int)
 
-dfZone = pd.read_csv("../data/taxi_zone_lookup.csv")
+dfZone = pd.read_csv("./data/taxi_zone_lookup.csv")
 
 df = df.merge(dfZone[['LocationID', 'Zone']], on='LocationID', how='left')
 
