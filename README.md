@@ -2,8 +2,7 @@
 
 ### the structure of the project
 
-<img width="557" alt="Project file structure" src="https://github.com/user-attachments/assets/b634e9fa-ce0c-4508-81f9-66e889c2d2cc" />
-
+<img width="557" alt="Project file structure" src="https://github.com/user-attachments/assets/fc6dd1af-839a-44af-b1a5-9c318fa90204" />
 
 
 #### 1. src/feature_store.py: store key features in Hopworks and feature versioning
@@ -23,4 +22,6 @@
 
 #### 6. notebook/Taxi Demand Prediction.ipynb includes: 
 - explicit data analysis and data processing
-- model builing, comparison and conclusion 
+- model builing, comparison and conclusion
+
+The published streamlit app is https://nyc-taxi-demand-prediction-chengli.streamlit.app/
