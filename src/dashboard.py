@@ -5,55 +5,54 @@ import numpy as np
 import pydeck as pdk
 import matplotlib.pyplot as plt
 
-"""
-###################### this part can be used to connect to MLflow #############
-# Set the MLflow tracking URI if not using the default local file-based store:
-# mlflow.set_tracking_uri("http://your-tracking-server:5000")
 
-# Specify your MLflow experiment ID or name.
-# For example, assume your experiment ID is "0"
-experiment_id = "0"
+# ###################### this part can be used to connect to MLflow #############
+# # Set the MLflow tracking URI if not using the default local file-based store:
+# # mlflow.set_tracking_uri("http://your-tracking-server:5000")
 
-# Retrieve run data from MLflow (you can filter or sort as needed)
-runs_df = mlflow.search_runs(experiment_ids=[experiment_id])
+# # Specify your MLflow experiment ID or name.
+# # For example, assume your experiment ID is "0"
+# experiment_id = "0"
 
-# If you want to sort runs by start time (most recent first)
-runs_df = runs_df.sort_values(by="start_time", ascending=False)
+# # Retrieve run data from MLflow (you can filter or sort as needed)
+# runs_df = mlflow.search_runs(experiment_ids=[experiment_id])
 
-st.title("MLflow Model Performance Dashboard")
+# # If you want to sort runs by start time (most recent first)
+# runs_df = runs_df.sort_values(by="start_time", ascending=False)
 
-# Display a table of run metrics (customize which metrics you want to display)
-st.subheader("Recent Runs")
-if not runs_df.empty:
-    # Select a few key columns
-    display_cols = ['run_id', 'metrics.MSE', 'metrics.R2', 'params.max_depth', 'params.eta']
-    st.dataframe(runs_df[display_cols])
-else:
-    st.write("No runs found for experiment id:", experiment_id)
+# st.title("MLflow Model Performance Dashboard")
 
-# Display the latest run's performance
-if not runs_df.empty:
-    latest_run = runs_df.iloc[0]
-    st.subheader("Latest Run Performance")
-    st.write(f"**Run ID:** {latest_run['run_id']}")
-    st.write(f"**MSE:** {latest_run['metrics.MSE']}")
-    st.write(f"**R²:** {latest_run['metrics.R2']}")
-    st.write(f"**Max Depth:** {latest_run['params.max_depth']}")
-    st.write(f"**Learning Rate (eta):** {latest_run['params.eta']}")
+# # Display a table of run metrics (customize which metrics you want to display)
+# st.subheader("Recent Runs")
+# if not runs_df.empty:
+#     # Select a few key columns
+#     display_cols = ['run_id', 'metrics.MSE', 'metrics.R2', 'params.max_depth', 'params.eta']
+#     st.dataframe(runs_df[display_cols])
+# else:
+#     st.write("No runs found for experiment id:", experiment_id)
 
-    # You could also show additional details or even load artifacts if needed.
-else:
-    st.info("No MLflow run data available.")
+# # Display the latest run's performance
+# if not runs_df.empty:
+#     latest_run = runs_df.iloc[0]
+#     st.subheader("Latest Run Performance")
+#     st.write(f"**Run ID:** {latest_run['run_id']}")
+#     st.write(f"**MSE:** {latest_run['metrics.MSE']}")
+#     st.write(f"**R²:** {latest_run['metrics.R2']}")
+#     st.write(f"**Max Depth:** {latest_run['params.max_depth']}")
+#     st.write(f"**Learning Rate (eta):** {latest_run['params.eta']}")
 
-# Optionally, you can create charts from the runs data.
-if not runs_df.empty:
-    # For example, plot MSE over time
-    runs_df['start_time'] = pd.to_datetime(runs_df['start_time'], unit='ms')
-    mse_chart_data = runs_df.sort_values("start_time")[["start_time", "metrics.MSE"]].set_index("start_time")
-    st.line_chart(mse_chart_data)
+#     # You could also show additional details or even load artifacts if needed.
+# else:
+#     st.info("No MLflow run data available.")
 
-############################################################################################################
-"""
+# # Optionally, you can create charts from the runs data.
+# if not runs_df.empty:
+#     # For example, plot MSE over time
+#     runs_df['start_time'] = pd.to_datetime(runs_df['start_time'], unit='ms')
+#     mse_chart_data = runs_df.sort_values("start_time")[["start_time", "metrics.MSE"]].set_index("start_time")
+#     st.line_chart(mse_chart_data)
+
+
 
 
 df = pd.read_csv('./data/PredictedTrips.csv')
@@ -147,7 +146,7 @@ elif page == "Top Locations":
 # ----------------------------
 # Page 3: Specific Location
 # ----------------------------
-else page == "Specific Location":
+elif page == "Specific Location":
     st.title("Ride Demand for a Specific Location")
     if not filtered_df.empty:
         # Create a dropdown list from unique LocationIDs in the filtered data
