@@ -70,7 +70,7 @@ df = df.merge(dfZone[['LocationID', 'Zone']], on='LocationID', how='left')
 st.sidebar.header("Time Filter")
 month = st.sidebar.number_input("Month", min_value=9, max_value=11, value=9)
 day = st.sidebar.number_input("Day", min_value=1, max_value=31, value=1)
-hour = st.sidebar.number_input("Hour", min_value=0, max_value=23, value=16)
+hour = st.sidebar.number_input("Hour", min_value=0, max_value=23, value=21)
 
 # Filter the data by time parameters
 filtered_df = df[(df['month'] == month) & (df['day'] == day) & (df['hour'] == hour)]
