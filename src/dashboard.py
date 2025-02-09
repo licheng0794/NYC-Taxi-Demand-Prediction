@@ -147,7 +147,7 @@ elif page == "Top Locations":
 # ----------------------------
 # Page 3: Specific Location
 # ----------------------------
-else page == "Specific Location":
+elif page == "Specific Location":
     st.title("Ride Demand for a Specific Location")
     if not filtered_df.empty:
         # Create a dropdown list from unique LocationIDs in the filtered data
